@@ -1,5 +1,5 @@
 function App() {
-  const element = <h1>Hello, world!</h1>;
+  const element = <h1>Hello, world2!</h1>;
   return (
     element
   

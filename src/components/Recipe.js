@@ -4,11 +4,13 @@ import IngredientList from './IngredientList'
 export default function Recipe(props) {
     // das es übersichtlicher bleibt, wir hier definiert was übergeben wird
     const {
+        id,
         name, 
         cookTime, 
         servings, 
         instructions,
-        ingredients
+        ingredients,
+        handleRecipeDelete
     } = props
     // hier ist der part was ausgespielt wird
     return (
@@ -17,7 +19,12 @@ export default function Recipe(props) {
             <h3 className='recipe__title'>{name}</h3>
             <div>
                 <button className='btn btn--primary mr-1'>Edit</button>
-                <button className='btn btn--danger'>Delete</button>
+                <button 
+                    className='btn btn--danger'
+                    onClick={() => handleRecipeDelete(id)}
+                >
+                    Delete
+                </button>
             </div>
         </div>
         <div className='recipe__row'>
@@ -30,11 +37,11 @@ export default function Recipe(props) {
         </div>
         <div className='recipe__row'>
             <span className='recipe__label'>Instructions:</span>
-            <div className='recipe__value'>{instructions}</div>
+            <div className='recipe__value recipe__instructions recipe__value--indented'>{instructions}</div>
         </div>
         <div className='recipe__row'>
             <span className='recipe__label'>Ingredients:</span>
-            <div className='recipe__value'>
+            <div className='recipe__value recipe__value--indented'>
                 <IngredientList ingredients={ingredients} />
             </div>
         </div>

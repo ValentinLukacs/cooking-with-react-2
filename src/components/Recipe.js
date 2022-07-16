@@ -1,16 +1,17 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import IngredientList from './IngredientList'
+import { RecipeContext } from './App'
 
 export default function Recipe(props) {
     // das es übersichtlicher bleibt, wir hier definiert was übergeben wird
+    const { handleRecipeDelete } = useContext(RecipeContext)
     const {
         id,
         name, 
         cookTime, 
         servings, 
         instructions,
-        ingredients,
-        handleRecipeDelete
+        ingredients
     } = props
     // hier ist der part was ausgespielt wird
     return (

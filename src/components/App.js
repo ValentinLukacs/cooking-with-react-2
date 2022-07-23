@@ -1,21 +1,37 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import RecipeList from "./RecipeList"
 import "../css/app.css"
 import { v4 as uuidv4 } from 'uuid'
 
 export const RecipeContext = React.createContext()
+const LOCAL_STORAGE_KEY = "cookingWithReact.recipes"
 
 function App() {
-  const [recipes, setRecipes] = useState (sampleRecipes)
+  const [selectedRecipeId, setSelectedRecipeId] = useState()
 
+  // hier wird die aplikatoin im local storage gespeichert
+  const [recipes, setRecipes] = useState(() => { 
+    const recipeJSON = localStorage.getItem(LOCAL_STORAGE_KEY)
+    if (recipeJSON == null) {
+      return sampleRecipes
+    } else {
+      return JSON.parse(recipeJSON)
+    }
+  })
+  useEffect(() => {
+    localStorage.setItem(LOCAL_STORAGE_KEY,JSON.stringify(recipes))
+  }, [recipes])
+
+  // contextvariablen werden übergeben
   const recipeContextValue = {
     // explanation: erster part = key, zweiter part = value
     // handleRecipeAdd: handleRecipeAdd,
-    // kann man auch abkürzen (1x mal schreiben)
+    // kann man auch abkürzen (1x mal schreiben, wenn der name identisch ist)
     handleRecipeAdd,
     handleRecipeDelete
   }
 
+  // add rezept funktionalität
   function handleRecipeAdd() {
     const newRecipe = {
       id: uuidv4(),
@@ -29,6 +45,10 @@ function App() {
     }
     setRecipes([...recipes, newRecipe])
   }
+  // delete rezept funktionalität
+  function handleRecipeDelete(id) {
+    setRecipes(recipes.filter(recipe => recipe.id !== id))
+  }
 
   return (
     <RecipeContext.Provider value={recipeContextValue}>
@@ -37,9 +57,7 @@ function App() {
   
   )
 
-  function handleRecipeDelete(id) {
-    setRecipes(recipes.filter(recipe => recipe.id !== id))
-  }
+
   
 }
 

@@ -3,7 +3,7 @@ import IngredientList from './IngredientList'
 import { RecipeContext } from './App'
 
 export default function Recipe(props) {
-    // das es übersichtlicher bleibt, wir hier definiert was übergeben wird
+    // übergeben von variablen (in const)
     const { handleRecipeDelete } = useContext(RecipeContext)
     const {
         id,
